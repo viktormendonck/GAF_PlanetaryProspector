@@ -13,6 +13,8 @@ public class DrillNodeController : MonoBehaviour
 
     private const string _buildinglayer = "Building";
     [SerializeField] private LayerMask _buildinglayerMask;
+    [SerializeField] private GameObject ParentObject;
+
     private Vector3 mouseWorldPos;
     private int currentConnections = 0;
     void Start()
@@ -50,22 +52,24 @@ public class DrillNodeController : MonoBehaviour
         {
             isPreviewActive = false;
             if (isPipeValid)
-            { 
-                GameObject drillObject = Instantiate(drill, this.transform.position, Quaternion.identity,this.transform.parent.transform);
+            {
+                GameObject drillObject = Instantiate(drill, transform.position, Quaternion.identity, transform);
                 DrillingBehavior drillBehavior = drillObject.GetComponent<DrillingBehavior>();
+                drillBehavior.SetConnectionParent(gameObject);
                 drillBehavior.SetEndPoint(mouseWorldPos);
-                drillBehavior.SetStartingPoint(this.transform.position);
+                drillBehavior.SetStartingPoint(transform.position);
                 currentConnections++;
             }
         }
-
-        
     }
 
-
+    public void SetParentObject(GameObject parent)
+    {
+        ParentObject = parent;
+    }
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0) && maxConnections > currentConnections)
+        if (Input.GetMouseButtonDown(0))
         {
             isPreviewActive = true;
             
@@ -74,23 +78,30 @@ public class DrillNodeController : MonoBehaviour
     }
     private bool IsPipeValid()
     {
-        if (Vector2.Distance(this.transform.position, mouseWorldPos) < 0.2f)
+        if (Vector2.Distance(transform.position, mouseWorldPos) < 0.2f)
         {
-            print("too short");
             return false;
         }
+        //check if ur not mining air
         if (!groundBox.OverlapPoint(mouseWorldPos))
         {
-            print("not on the ground");
             return false;
         }
-        Vector3 dir = (mouseWorldPos - this.transform.position).normalized;
-        
-        if (Physics2D.LinecastAll(this.transform.position+ dir, mouseWorldPos, 1 << LayerMask.NameToLayer(_buildinglayer)).Length > 1 )
+        //check if the line isnt crossing any other pipes
+        Vector3 dir = (mouseWorldPos - transform.position).normalized;
+        if (Physics2D.LinecastAll(transform.position+ dir, mouseWorldPos, 1 << LayerMask.NameToLayer(_buildinglayer)).Length > 1 )
         {
-            print("something in the way" + Physics2D.LinecastAll(this.transform.position, mouseWorldPos, 1 << LayerMask.NameToLayer(_buildinglayer)).Length);
+            return false;
+        }
+        //check if pipe has any branches left
+        if (currentConnections + 1 > maxConnections)
+        {
             return false;
         }
         return true;
+    }
+    public GameObject GetParent()
+    {
+        return ParentObject;
     }
 }

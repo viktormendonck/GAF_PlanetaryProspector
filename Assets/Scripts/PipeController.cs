@@ -11,6 +11,6 @@ public class PipeController : MonoBehaviour
 
         transform.position = midPoint;
         transform.rotation = Quaternion.Euler(0, 0, angle);
-        transform.localScale = new Vector3(distance*(1 / gameObject.transform.parent.transform.lossyScale.x), 0.5f , transform.localScale.z);
+        transform.localScale = new Vector3(distance*(1 / gameObject.transform.parent.transform.lossyScale.x), .5f , transform.localScale.z);
     }
 }
