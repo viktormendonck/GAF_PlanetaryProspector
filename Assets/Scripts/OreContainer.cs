@@ -11,7 +11,11 @@ public class OreContainer : MonoBehaviour
 
     private void Start()
     {
-        parentContainer = GetComponent<DrillNodeController>().GetParent().GetComponent<OreContainer>();
+
+        if (TryGetComponent<DrillNodeController>(out DrillNodeController temp))
+        {
+            parentContainer = temp.GetParent().GetComponent<OreContainer>();
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -37,7 +41,6 @@ public class OreContainer : MonoBehaviour
                 parentContainer.currentOreAmount += transferSpeed * Time.deltaTime;
                 currentOreAmount -= transferSpeed * Time.deltaTime;
             }
-            print(parentContainer.currentOreAmount);
         }
 
     }

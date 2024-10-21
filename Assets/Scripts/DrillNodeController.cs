@@ -12,7 +12,6 @@ public class DrillNodeController : MonoBehaviour
     [SerializeField] private Color invalidColor;
 
     private const string _buildinglayer = "Building";
-    [SerializeField] private LayerMask _buildinglayerMask;
     [SerializeField] private GameObject ParentObject;
 
     private Vector3 mouseWorldPos;

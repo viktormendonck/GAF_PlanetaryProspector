@@ -17,7 +17,7 @@ public class MapHandler : MonoBehaviour
     void Start()
     {
         SpawnOres();
-        SpawnDirt();
+        //SpawnDirt();
     }
     private void SpawnDirt()
     {

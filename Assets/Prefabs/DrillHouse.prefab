@@ -75,9 +75,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4961189971743677975}
   - component: {fileID: 41052916193486277}
+  - component: {fileID: 2235054838489477765}
   m_Layer: 3
   m_Name: DrillHouse
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,6 +145,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.8}
   m_EdgeRadius: 0
+--- !u!114 &2235054838489477765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7777788497862721344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc14a86b5126df54b91d84235f0da9ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxOreAmount: 150
+  currentOreAmount: 0
+  transferSpeed: 10
 --- !u!1 &8776937907868389011
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,6 +340,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: connection
       objectReference: {fileID: 0}
+    - target: {fileID: 1081006117339636035, guid: 0e8dce4540c854a449031d01f405c340, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2710023171685441675, guid: 0e8dce4540c854a449031d01f405c340, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -376,6 +396,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8821177023315641718, guid: 0e8dce4540c854a449031d01f405c340, type: 3}
+      propertyPath: ParentObject
+      value: 
+      objectReference: {fileID: 7777788497862721344}
     m_RemovedComponents:
     - {fileID: 868134802229191321, guid: 0e8dce4540c854a449031d01f405c340, type: 3}
     m_RemovedGameObjects: []

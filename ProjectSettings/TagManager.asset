@@ -9,6 +9,7 @@ TagManager:
   - Drill
   - Node
   - Background
+  - Building
   layers:
   - Default
   - TransparentFX
