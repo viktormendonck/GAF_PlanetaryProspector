@@ -44,4 +44,12 @@ public class OreContainer : MonoBehaviour
         }
 
     }
+    public float GetCurrentOreAmount()
+    {
+        return currentOreAmount;
+    }
+    public float GetMaxOreAmount()
+    {
+        return maxOreAmount;
+    }
 }
