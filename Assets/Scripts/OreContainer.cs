@@ -36,13 +36,25 @@ public class OreContainer : MonoBehaviour
     {
         if (parentContainer != null)
         {
-            if (parentContainer.maxOreAmount - parentContainer.currentOreAmount > transferSpeed && currentOreAmount >0)
+            if (parentContainer.maxOreAmount - parentContainer.currentOreAmount > transferSpeed * Time.deltaTime && currentOreAmount >0)
             {
                 parentContainer.currentOreAmount += transferSpeed * Time.deltaTime;
                 currentOreAmount -= transferSpeed * Time.deltaTime;
             }
         }
 
+    }
+
+    public void TransferOre(OreContainer otherContainer)
+    {
+        if (otherContainer != null)
+        {
+            if (otherContainer.maxOreAmount - otherContainer.currentOreAmount > transferSpeed * Time.deltaTime && currentOreAmount > 0)
+            {
+                otherContainer.currentOreAmount += transferSpeed * Time.deltaTime;
+                currentOreAmount -= transferSpeed * Time.deltaTime;
+            }
+        }
     }
     public float GetCurrentOreAmount()
     {

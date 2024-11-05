@@ -106,9 +106,6 @@ MonoBehaviour:
   drill: {fileID: 7639953490031076316, guid: 28c0c0167f842a64ebf9a27eb5b4aa67, type: 3}
   previewColor: {r: 0.63529414, g: 0.63529414, b: 0.63529414, a: 1}
   invalidColor: {r: 0.61006284, g: 0.04412399, b: 0.04412399, a: 1}
-  _buildinglayerMask:
-    serializedVersion: 2
-    m_Bits: 0
   ParentObject: {fileID: 0}
 --- !u!114 &181047179012508862
 MonoBehaviour:
@@ -122,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc14a86b5126df54b91d84235f0da9ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxOreAmount: 10
+  maxOreAmount: 2
   currentOreAmount: 0
   transferSpeed: 1
 --- !u!120 &4596115589211514261

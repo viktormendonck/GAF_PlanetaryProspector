@@ -10,6 +10,9 @@ TagManager:
   - Node
   - Background
   - Building
+  - Silo
+  - Miner
+  - Transporter
   layers:
   - Default
   - TransparentFX
