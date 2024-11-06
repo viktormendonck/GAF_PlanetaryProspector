@@ -10,9 +10,12 @@ public class DrillNodeController : MonoBehaviour
     private Collider2D groundBox;
     [SerializeField] private Color previewColor;
     [SerializeField] private Color invalidColor;
-
+    [SerializeField] private float PricePerUnit = 20.0f;
     private const string _buildinglayer = "Building";
     [SerializeField] private GameObject ParentObject;
+
+    private MoneyContainer money;
+    private PriceIndicator priceIndicator;
 
     private Vector3 mouseWorldPos;
     private int currentConnections = 0;
@@ -21,6 +24,8 @@ public class DrillNodeController : MonoBehaviour
         groundBox = GameObject.Find("Ground").GetComponent<Collider2D>();
         previewLineRenderer = GetComponent<LineRenderer>();
         previewLineRenderer.material = previewLineRenderer.materials[0];
+        money = GameObject.FindGameObjectWithTag("Money").GetComponent<MoneyContainer>();
+        priceIndicator = GameObject.FindGameObjectWithTag("PriceIndicator").GetComponent<PriceIndicator>();
     }
 
     void Update()
@@ -32,6 +37,7 @@ public class DrillNodeController : MonoBehaviour
             previewLineRenderer.enabled = true;
             previewLineRenderer.SetPosition(0, this.transform.position);
             previewLineRenderer.SetPosition(1, mouseWorldPos);
+            //for some reason linerenderers work with a lerped line, so i guess this works
             if (isPipeValid = IsPipeValid())
             {
                 previewLineRenderer.startColor = previewColor;
@@ -49,9 +55,11 @@ public class DrillNodeController : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0) && isPreviewActive )
         {
+            priceIndicator.Deactivate();
             isPreviewActive = false;
             if (isPipeValid)
             {
+                money.AddMoney(-(Vector2.Distance(transform.position, mouseWorldPos) * PricePerUnit));
                 GameObject drillObject = Instantiate(drill, transform.position, Quaternion.identity, transform);
                 DrillingBehavior drillBehavior = drillObject.GetComponent<DrillingBehavior>();
                 drillBehavior.SetConnectionParent(gameObject);
@@ -71,13 +79,28 @@ public class DrillNodeController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             isPreviewActive = true;
-            
+            priceIndicator.Activate(0);
+            priceIndicator.fixedHeight = false;
 
         }
     }
     private bool IsPipeValid()
     {
-        if (Vector2.Distance(transform.position, mouseWorldPos) < 0.2f)
+        float distance = Vector2.Distance(transform.position, mouseWorldPos);
+        float price = distance * PricePerUnit;
+        priceIndicator.setPrice((int)price);
+        //check if you can afford to place the pipe
+        if (price > money.GetMoney())
+        {
+            priceIndicator.canAfford = false;
+            return false;
+        }
+        else
+        {
+            priceIndicator.canAfford = true;
+        }
+        //check if the pipe isnt too short
+        if (distance < 0.2f)
         {
             return false;
         }

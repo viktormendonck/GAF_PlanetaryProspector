@@ -13,11 +13,14 @@ public class MapHandler : MonoBehaviour
     [SerializeField] private GameObject OreParent;
     [SerializeField] private GameObject[] OrePrefabs;
     private Vector3 MapTopLeft = new Vector2(8.5f, 1.5f);
-    
+
+    [SerializeField] private bool generateFloor = true;
+    [SerializeField] private bool generateOre = true;
+
     void Start()
     {
-        SpawnOres();
-        //SpawnDirt();
+        if (generateOre) SpawnOres();
+        if (generateFloor) SpawnDirt();
     }
     private void SpawnDirt()
     {

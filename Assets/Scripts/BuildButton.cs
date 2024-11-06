@@ -15,6 +15,7 @@ public class BuildButton : MonoBehaviour
     [SerializeField] private MoneyContainer moneyContainer;
     [SerializeField] private int cost;
     [SerializeField] private TransportHandler transportHandler;
+    private PriceIndicator priceIndicator;
 
     private readonly float maxClickDelay = 0.2f;
     private float currentlClickDelay = 0.2f;
@@ -32,6 +33,7 @@ public class BuildButton : MonoBehaviour
         buildingVisualizer.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
         buildingVisualizer.GetComponent<SpriteRenderer>().enabled = false;
         visualizing = buildingVisualizer.GetComponent<PreviewColorHandler>();
+        priceIndicator = GameObject.FindGameObjectWithTag("PriceIndicator").GetComponent<PriceIndicator>();
     }
 
     // Update is called once per frame
@@ -43,15 +45,19 @@ public class BuildButton : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             buildingVisualizer.transform.position = new Vector3(mousePos.x, buildHeight + PreviewHeightOffset, buildingVisualizer.transform.position.z);
             currentlClickDelay -= Time.deltaTime;
+            priceIndicator.canAfford = cost <= moneyContainer.GetMoney();
+            
             if (Input.GetMouseButtonDown(0) && visualizing.CanPlace && currentlClickDelay < 0)
             {
                 isBuilding = false;
                 if (cost <= moneyContainer.GetMoney())
                 {
+
                     buildingVisualizer.GetComponent<SpriteRenderer>().enabled = false;
                     GameObject go= Instantiate(buildingPrefab, parent.transform);
                     go.transform.position = new Vector3(mousePos.x, buildHeight + heightOffset, buildingVisualizer.transform.position.z);
                     moneyContainer.AddMoney(-cost);
+                    priceIndicator.Deactivate();
                     if (go.GetComponent<TransportNodeGetter>() != null)
                     {
                         GameObject node = go.GetComponent<TransportNodeGetter>().GetTransportNode();
@@ -72,6 +78,12 @@ public class BuildButton : MonoBehaviour
                 }
             }
         }
+        if (Input.GetMouseButtonDown(1) && isBuilding)
+        {
+            isBuilding = false;
+            buildingVisualizer.GetComponent<SpriteRenderer>().enabled = false;
+            priceIndicator.Deactivate();
+        }
     }
     private void OnMouseOver()
     {
@@ -84,6 +96,8 @@ public class BuildButton : MonoBehaviour
             }
             else
             {
+                priceIndicator.Activate(cost);
+                priceIndicator.fixedHeight = true;
                 isBuilding = true;
                 currentlClickDelay = maxClickDelay;
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

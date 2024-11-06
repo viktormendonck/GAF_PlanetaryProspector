@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 
 public class StoreController : MonoBehaviour
@@ -10,7 +11,11 @@ public class StoreController : MonoBehaviour
     private OreContainer oreContainer;
     [SerializeField] private float SalePrice = 10;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private TimeManager time;
+    [SerializeField] private float volatility = 0.1f;
     private float PreviousOreAmount = 0;
+    private int prevDay = 0;
+    private System.Random rand;
     void Start()
     {
         if (moneyContainer == null)
@@ -29,6 +34,9 @@ public class StoreController : MonoBehaviour
         {
             Debug.LogError("no textMeshPro assigned");
         }
+        rand = new System.Random();
+        SalePrice = 10+((float)rand.NextDouble()*4-2);
+
         text.text = "$" + SalePrice.ToString("0.00");
     }
 
@@ -46,6 +54,12 @@ public class StoreController : MonoBehaviour
 
     private void UpdateSalePrice()
     {
-
+        if(prevDay != time.GetCurrentDay())
+        {
+            prevDay = time.GetCurrentDay();
+            float dailyChange = (float)(rand.NextDouble() * 2 * volatility - volatility);
+            SalePrice += SalePrice * dailyChange;
+            text.text = "$" + SalePrice.ToString("0.00");
+        }
     }
 }

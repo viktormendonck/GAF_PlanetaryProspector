@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
+using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,6 +18,10 @@ public class MetalDetectorController : MonoBehaviour
     [SerializeField] private int maxScanDepth = 4;
     [SerializeField] private int currentScanDepth = 0;
     [SerializeField] private float maxX = 7.5f;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
+    private float maxFlickerTime = 0.5f;
+    private float currentFlickerTime = 0f;
 
     [SerializeField] private float waitingTime = 10f;
     void Start()
@@ -25,6 +30,8 @@ public class MetalDetectorController : MonoBehaviour
         metalDetector.transform.localScale = new Vector3(scanRange, scanRange, 1);
         metalDetector.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         oreScanning = metalDetector.GetComponent<OreScanning>();
+        spriteRenderer.enabled = false
+            ;
     }
 
     private bool isScanning = false;
@@ -42,8 +49,17 @@ public class MetalDetectorController : MonoBehaviour
             else
             {
                 waitingTime -= Time.deltaTime;
+                
             }
-            GetComponent<SpriteRenderer>().color = Color.green;
+            if (currentFlickerTime >= maxFlickerTime)
+            {
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+                currentFlickerTime = 0;
+            }
+            else
+            {
+                currentFlickerTime += Time.deltaTime;
+            }
             return;
         }
         if (isScanning)
@@ -57,6 +73,7 @@ public class MetalDetectorController : MonoBehaviour
                 if (oreScanning.foundOre) 
                 {
                     foundOre = true;
+                    spriteRenderer.enabled = true;
 
                 }
 

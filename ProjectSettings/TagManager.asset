@@ -13,6 +13,8 @@ TagManager:
   - Silo
   - Miner
   - Transporter
+  - Money
+  - PriceIndicator
   layers:
   - Default
   - TransparentFX
