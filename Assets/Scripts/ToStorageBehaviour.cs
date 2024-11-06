@@ -15,19 +15,37 @@ public class ToStorageBehaviour : StateMachineBehaviour
         animator.GetComponent<TransporterController>().Deactivate();
         handler = animator.GetComponentInParent<TransportHandler>();
         goal = GetStorageObject();
+        ClearAnimatorParams(animator);
+
+    }
+
+    private void ClearAnimatorParams(Animator animator)
+    {
+        //for some reason the triggers stay active instead of resetting
+        animator.ResetTrigger("StartStoring");
+        animator.ResetTrigger("DoneFilling");
+        animator.ResetTrigger("StartSelling");
+        animator.ResetTrigger("DoneDepositing");
+        animator.ResetTrigger("Arrived");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //move towards goal
-        if (Vector2.Distance(animator.transform.position, goal.transform.position) > 0.01)
+        if (goal == null)
         {
-            animator.transform.position = Vector2.MoveTowards(animator.transform.position, goal.transform.position, speed * Time.deltaTime);
+            goal = GetStorageObject();
         }
-        else
-        {
-            animator.SetTrigger("Arrived");
+        else {
+            if (Vector2.Distance(animator.transform.position, goal.transform.position) > 0.01)
+            {
+                animator.transform.position = Vector2.MoveTowards(animator.transform.position,  goal.transform.position, speed * Time.deltaTime);
+            }
+            else
+            {
+                animator.SetTrigger("Arrived");
+            }
         }
     }
 

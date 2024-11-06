@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class TransporterController : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class TransporterController : MonoBehaviour
         Traveling
     }
     private TransporterState state;
-
+    public bool isSelling = false;
     private OreContainer transferContainer = null;
     private readonly int filledness_id = Animator.StringToHash("transportFullness");
 
@@ -67,7 +68,7 @@ public class TransporterController : MonoBehaviour
         float minDistance = float.MaxValue;
         foreach (var miner in handler.MinerNodes)
         {
-            float distance = Vector3.Distance(miner.transform.position, transform.position);
+            float distance = Vector2.Distance(miner.transform.position, transform.position);
             if (distance < minDistance)
             {
                 minDistance = distance;
@@ -76,12 +77,18 @@ public class TransporterController : MonoBehaviour
         }
         foreach (var silo in handler.SiloNodes)
         {
-            float distance = Vector3.Distance(silo.transform.position, transform.position);
+            float distance = Vector2.Distance(silo.transform.position, transform.position);
             if (distance < minDistance)
             {
                 minDistance = distance;
                 result = silo;
             }
+        }
+        float d = Vector2.Distance(handler.marketNodes[0].transform.position, transform.position);
+        if (d < minDistance)
+        {
+            minDistance = d;
+            result = handler.marketNodes[0];
         }
         if (result == null)
         {

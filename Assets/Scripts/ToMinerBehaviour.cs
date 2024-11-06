@@ -16,8 +16,19 @@ public class ToMinerBehaviour : StateMachineBehaviour
         animator.GetComponent<TransporterController>().Deactivate();
         handler = animator.GetComponentInParent<TransportHandler>();
         goal = GetFullestMiner();
+        ClearAnimatorParams(animator);
+
     }
 
+    private void ClearAnimatorParams(Animator animator)
+    {
+        //for some reason the triggers stay active instead of resetting
+        animator.ResetTrigger("StartStoring");
+        animator.ResetTrigger("DoneFilling");
+        animator.ResetTrigger("StartSelling");
+        animator.ResetTrigger("DoneDepositing");
+        animator.ResetTrigger("Arrived");
+    }
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

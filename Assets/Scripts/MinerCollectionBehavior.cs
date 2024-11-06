@@ -9,7 +9,6 @@ public class MinerCollectionBehavior : StateMachineBehaviour
     private GameObject miner;
 
     private OreContainer minerOreContainer;
-    private OreContainer TransporterOreContainer;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -19,7 +18,17 @@ public class MinerCollectionBehavior : StateMachineBehaviour
         handler = animator.GetComponentInParent<TransportHandler>();
         miner = GetClosestMiner(animator);
         minerOreContainer = miner.GetComponent<TransporterNode>().GetOreContainer();
-        TransporterOreContainer = node.GetOreContainer();
+        ClearAnimatorParams(animator);
+    }
+
+    private void ClearAnimatorParams(Animator animator)
+    {
+        //for some reason the triggers stay active instead of resetting
+        animator.ResetTrigger("StartStoring");
+        animator.ResetTrigger("DoneFilling");
+        animator.ResetTrigger("StartSelling");
+        animator.ResetTrigger("DoneDepositing");
+        animator.ResetTrigger("Arrived");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -27,16 +36,14 @@ public class MinerCollectionBehavior : StateMachineBehaviour
     {
         if (miner == null)
         {
-            animator.SetTrigger("DoneDepositing");
+            animator.SetTrigger("DoneFilling");
         }
         else
         {
-
-            float transporterFill = TransporterOreContainer.GetCurrentOreAmount() - TransporterOreContainer.GetMaxOreAmount();
             float minerFill = minerOreContainer.GetCurrentOreAmount();
-            if (minerFill <= 0.5 || transporterFill <= 0.5) //if the miner is empty or the transporter is full
+            if (minerFill <= 0.5 || animator.GetFloat("transportFullness") >=0.95) //if the miner is empty or the transporter is full
             {
-                animator.SetTrigger("DoneDepositing");
+                animator.SetTrigger("DoneFilling");
             }
         }
     }

@@ -18,8 +18,23 @@ public class storingBehaviour : StateMachineBehaviour
         animator.GetComponent<TransporterController>().Activate(TransporterController.TransporterState.Depositing);
         handler = animator.GetComponentInParent<TransportHandler>();
         silo = GetClosestSilo(animator);
-        siloOreContainer = silo.GetComponent<TransporterNode>().GetOreContainer();
+        if (silo)
+        {
+            siloOreContainer = silo.GetComponent<TransporterNode>().GetOreContainer();
+        }
         TransporterOreContainer = node.GetOreContainer();
+        ClearAnimatorParams(animator);
+
+    }
+
+    private void ClearAnimatorParams(Animator animator)
+    {
+        //for some reason the triggers stay active instead of resetting
+        animator.ResetTrigger("StartStoring");
+        animator.ResetTrigger("DoneFilling");
+        animator.ResetTrigger("StartSelling");
+        animator.ResetTrigger("DoneDepositing");
+        animator.ResetTrigger("Arrived");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -32,9 +47,8 @@ public class storingBehaviour : StateMachineBehaviour
         else
         {
             
-            float siloFill = siloOreContainer.GetCurrentOreAmount() - siloOreContainer.GetMaxOreAmount();
-            float transporterFill = TransporterOreContainer.GetCurrentOreAmount();
-            if (siloFill <= 0.5 || transporterFill <= 0.5) //if the silo is full or the transporter is empty
+            float siloFill =  siloOreContainer.GetMaxOreAmount() - siloOreContainer.GetCurrentOreAmount();
+            if (siloFill <= 0.5 || animator.GetFloat("transportFullness") <= 0.05) //if the silo is full or the transporter is empty
             {
                 animator.SetTrigger("DoneDepositing");
             }

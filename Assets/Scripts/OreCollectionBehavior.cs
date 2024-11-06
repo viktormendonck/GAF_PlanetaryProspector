@@ -21,6 +21,18 @@ public class OreCollectionBehavior : StateMachineBehaviour
         container = GetClosestContainer(animator);
         containerOreContainer = container.GetComponent<TransporterNode>().GetOreContainer();
         TransporterOreContainer = node.GetOreContainer();
+        ClearAnimatorParams(animator);
+
+    }
+
+    private void ClearAnimatorParams(Animator animator)
+    {
+        //for some reason the triggers stay active instead of resetting
+        animator.ResetTrigger("StartStoring");
+        animator.ResetTrigger("DoneFilling");
+        animator.ResetTrigger("StartSelling");
+        animator.ResetTrigger("DoneDepositing");
+        animator.ResetTrigger("Arrived");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -28,7 +40,7 @@ public class OreCollectionBehavior : StateMachineBehaviour
     {
         if (container == null)
         {
-            animator.SetTrigger("DoneDepositing");
+            animator.SetTrigger("DoneFilling");
         }
         else
         {
@@ -37,7 +49,7 @@ public class OreCollectionBehavior : StateMachineBehaviour
             float containerFill = containerOreContainer.GetCurrentOreAmount();
             if (containerFill <= 0.5 || transporterFill <= 0.5) //if the container is empty or the transporter is full
             {
-                animator.SetTrigger("DoneDepositing");
+                animator.SetTrigger("DoneFilling");
             }
         }
     }

@@ -14,7 +14,18 @@ public class ToSiloBehaviour : StateMachineBehaviour
         TransporterNode node = animator.GetComponent<TransporterNode>();
         animator.GetComponent<TransporterController>().Deactivate();
         handler = animator.GetComponentInParent<TransportHandler>();
-        goal = GetFullestMiner();
+        goal = GetEmptiestSilo();
+        ClearAnimatorParams(animator);
+    }
+
+    private void ClearAnimatorParams(Animator animator)
+    {
+        //for some reason the triggers stay active instead of resetting
+        animator.ResetTrigger("StartStoring");
+        animator.ResetTrigger("DoneFilling");
+        animator.ResetTrigger("StartSelling");
+        animator.ResetTrigger("DoneDepositing");
+        animator.ResetTrigger("Arrived");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -38,14 +49,16 @@ public class ToSiloBehaviour : StateMachineBehaviour
         }
     }
 
-    private GameObject GetFullestMiner()
+    private GameObject GetEmptiestSilo()
     {
-        float temp = 0;
+        float temp = float.MaxValue;
         GameObject result = null;
-        foreach (GameObject Object in handler.MinerNodes)
+        
+        foreach (GameObject Object in handler.SiloNodes)
         {
             OreContainer container = Object.GetComponent<TransporterNode>().GetOreContainer();
-            if (container.GetCurrentOreAmount() >= temp)
+            
+            if (container.GetCurrentOreAmount() <= temp)
             {
                 temp = container.GetCurrentOreAmount();
                 result = Object;
