@@ -25,6 +25,9 @@ public class BuildButton : MonoBehaviour
 
     GameObject buildingVisualizer;
     PreviewColorHandler visualizing;
+
+    private List<BuildButton> otherShops = new List<BuildButton>();
+
     void Start()
     {
         buildingVisualizer = transform.GetChild(0).gameObject;
@@ -34,6 +37,21 @@ public class BuildButton : MonoBehaviour
         buildingVisualizer.GetComponent<SpriteRenderer>().enabled = false;
         visualizing = buildingVisualizer.GetComponent<PreviewColorHandler>();
         priceIndicator = GameObject.FindGameObjectWithTag("PriceIndicator").GetComponent<PriceIndicator>();
+        foreach (GameObject shop in GameObject.FindGameObjectsWithTag("ShopButton"))
+        {
+            if (shop != gameObject)
+            {
+                if (shop.TryGetComponent<BuildButton>(out BuildButton b))
+                {
+                    otherShops.Add(b);
+                }
+                else
+                {
+                    Debug.LogError(shop.name + " doesnt contain a ShopButton");
+                }
+
+            }
+        }
     }
 
     // Update is called once per frame
@@ -49,15 +67,12 @@ public class BuildButton : MonoBehaviour
             
             if (Input.GetMouseButtonDown(0) && visualizing.CanPlace && currentlClickDelay < 0)
             {
-                isBuilding = false;
+                DeactivateShop();
                 if (cost <= moneyContainer.GetMoney())
                 {
-
-                    buildingVisualizer.GetComponent<SpriteRenderer>().enabled = false;
                     GameObject go= Instantiate(buildingPrefab, parent.transform);
                     go.transform.position = new Vector3(mousePos.x, buildHeight + heightOffset, buildingVisualizer.transform.position.z);
                     moneyContainer.AddMoney(-cost);
-                    priceIndicator.Deactivate();
                     if (go.GetComponent<TransportNodeGetter>() != null)
                     {
                         GameObject node = go.GetComponent<TransportNodeGetter>().GetTransportNode();
@@ -74,15 +89,12 @@ public class BuildButton : MonoBehaviour
                             transportHandler.MinerNodes.Add(node);
                         }
                     }
-                   
                 }
             }
         }
         if (Input.GetMouseButtonDown(1) && isBuilding)
         {
-            isBuilding = false;
-            buildingVisualizer.GetComponent<SpriteRenderer>().enabled = false;
-            priceIndicator.Deactivate();
+            DeactivateShop();
         }
     }
     private void OnMouseOver()
@@ -91,11 +103,11 @@ public class BuildButton : MonoBehaviour
         {
             if (isBuilding)
             {
-                isBuilding = false;
-                buildingVisualizer.GetComponent<SpriteRenderer>().enabled = false;
+                DeactivateShop();
             }
             else
             {
+                DeactivateOtherShops();
                 priceIndicator.Activate(cost);
                 priceIndicator.fixedHeight = true;
                 isBuilding = true;
@@ -104,7 +116,24 @@ public class BuildButton : MonoBehaviour
                 mousePos.z = buildHeight;
                 visualizing.hasEnoughMoney = cost <= moneyContainer.GetMoney();
                 buildingVisualizer.GetComponent<SpriteRenderer>().enabled = true;
+
             }
+        }
+    }
+
+    private void DeactivateShop()
+    {
+        priceIndicator.Deactivate();
+        priceIndicator.fixedHeight = false;
+        isBuilding = false;
+        buildingVisualizer.GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    private void DeactivateOtherShops()
+    {
+        foreach (BuildButton shop in otherShops)
+        {
+            shop.DeactivateShop();
         }
     }
 }

@@ -15,6 +15,7 @@ TagManager:
   - Transporter
   - Money
   - PriceIndicator
+  - ShopButton
   layers:
   - Default
   - TransparentFX

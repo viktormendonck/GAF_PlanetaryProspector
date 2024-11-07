@@ -11,7 +11,13 @@ public class OreScanning : MonoBehaviour
 
         if (collision.gameObject.tag == "Ore" && Random.Range(0, 101) < chanceToScan)
         {
-            foundOre = true;
+            if (collision.gameObject.TryGetComponent(out VeinInfo ore))
+            {
+                if (!ore.wasFound())
+                {
+                    foundOre = true;
+                }
+            }
         }
     }
 }

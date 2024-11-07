@@ -4,7 +4,8 @@ using UnityEngine;
 public class VeinInfo : MonoBehaviour
 {
     // Start is called before the first frame update
-
+    private bool found = false;
+    private bool depleted = false;
     private float veinAmount = 100;
     private float totalAmount = 0;
     private Material veinMaterialInstance;
@@ -28,8 +29,14 @@ public class VeinInfo : MonoBehaviour
         return veinAmount;
     }
 
+    public bool wasFound()
+    {
+        return found;
+    }
+
     public float MineVein(float drillSpeed)
     {
+        found = true;
         if (veinAmount > 0)
         {
             veinAmount -= drillSpeed * Time.deltaTime;
@@ -39,6 +46,7 @@ public class VeinInfo : MonoBehaviour
         else
         {
             veinMaterialInstance.color = depletedVeinColor;
+            depleted = true;
             return 0;
         }
     }
@@ -49,6 +57,11 @@ public class VeinInfo : MonoBehaviour
             collision.gameObject.GetComponent<VeinInfo>().MarkedForDeletion = true;
             Destroy(collision.gameObject);
         }
+    }
+
+    public bool IsDepleted()
+    {
+        return depleted;
     }
 
 }

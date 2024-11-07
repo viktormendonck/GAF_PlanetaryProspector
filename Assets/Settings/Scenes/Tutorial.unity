@@ -1573,7 +1573,7 @@ GameObject:
   - component: {fileID: 472716073}
   m_Layer: 5
   m_Name: ShopButtonMiner
-  m_TagString: Untagged
+  m_TagString: ShopButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2454,7 +2454,7 @@ GameObject:
   - component: {fileID: 742448692}
   m_Layer: 5
   m_Name: shopButtonTransport
-  m_TagString: Untagged
+  m_TagString: ShopButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2609,7 +2609,7 @@ Transform:
   m_GameObject: {fileID: 753972922}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.89, y: -4.01, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2618,7 +2618,7 @@ Transform:
   - {fileID: 260792540}
   - {fileID: 101681964}
   - {fileID: 1185154840}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 951264940}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &753972924
 MonoBehaviour:
@@ -2639,6 +2639,8 @@ MonoBehaviour:
   OreParent: {fileID: 104827733}
   OrePrefabs:
   - {fileID: 4105052790575878139, guid: 5426eb14636c2324b8691a83486c9380, type: 3}
+  generateFloor: 1
+  generateOre: 1
 --- !u!1 &781675730
 GameObject:
   m_ObjectHideFlags: 0
@@ -2828,9 +2830,10 @@ GameObject:
   - component: {fileID: 911772231}
   - component: {fileID: 911772233}
   - component: {fileID: 911772232}
+  - component: {fileID: 911772234}
   m_Layer: 0
   m_Name: PriceIndicator
-  m_TagString: Untagged
+  m_TagString: PriceIndicator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2988,6 +2991,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &911772234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911772230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96dcc36d0e780cf45807e79c573e26c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canAfford: 1
+  fixedHeight: 0
 --- !u!1 &928970530
 GameObject:
   m_ObjectHideFlags: 0
@@ -3072,6 +3089,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &951264939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 951264940}
+  m_Layer: 0
+  m_Name: Game
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &951264940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951264939}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.89, y: -4.01, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 753972923}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &992653971
 GameObject:
   m_ObjectHideFlags: 0
@@ -3442,6 +3491,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1126790941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1126790942}
+  m_Layer: 0
+  m_Name: EndScreenParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1126790942
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126790941}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1163099183
 GameObject:
   m_ObjectHideFlags: 0
@@ -3492,8 +3572,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d5cead310f6ec4a9fd76506b1e8b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EndScreen: {fileID: 1544801591989488379, guid: 0f9cd6f5fac6ae148a56a2d38c58afe5, type: 3}
+  GameRoot: {fileID: 951264939}
+  EndScreenParent: {fileID: 1126790942}
   text: {fileID: 1163099186}
   timePerDay: 6
+  maxDay: 100
 --- !u!114 &1163099186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3757,7 +3841,7 @@ GameObject:
   - component: {fileID: 1524281262}
   m_Layer: 5
   m_Name: shopButtonDetector
-  m_TagString: Untagged
+  m_TagString: ShopButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3900,7 +3984,7 @@ GameObject:
   - component: {fileID: 1559105427}
   m_Layer: 5
   m_Name: shopButtonSilo
-  m_TagString: Untagged
+  m_TagString: ShopButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5322,7 +5406,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $1000K
+  m_text: $10000K
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 981fc1bdc5c6cbb4bb156a7ab28e6cac, type: 2}
   m_sharedMaterial: {fileID: -2450713438594193268, guid: 981fc1bdc5c6cbb4bb156a7ab28e6cac, type: 2}
@@ -5628,4 +5712,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 619394802}
-  - {fileID: 753972923}
+  - {fileID: 951264940}
+  - {fileID: 1126790942}
