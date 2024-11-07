@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TimeManager : MonoBehaviour
 {
-    [SerializeField] private GameObject EndScreen;
-    [SerializeField] private GameObject GameRoot;
-    [SerializeField] private Transform EndScreenParent;
 
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private float timePerDay = 6;
@@ -34,16 +32,18 @@ public class TimeManager : MonoBehaviour
         if (currentDay == maxDay+1 && !hasEnded)
         {
             hasEnded = true;
-            GameObject go = Instantiate(EndScreen,EndScreenParent);
-            EndScript end =go.GetComponent<EndScript>();
-            end.Money = GameObject.FindGameObjectWithTag("Money").GetComponent<MoneyContainer>().GetMoney();
+
+           
+
+            GameData.money = GameObject.FindGameObjectWithTag("Money").GetComponent<MoneyContainer>().GetMoney();
             bool temp = false;
             foreach (GameObject ore in GameObject.FindGameObjectsWithTag("Ore"))
             {
                 temp |= !ore.GetComponent<VeinInfo>().IsDepleted();
             }
-            end.ClearedField = !temp;
-            Destroy(GameRoot);
+            GameData.clearedBoard = !temp;
+
+            SceneManager.LoadScene(3);
 
         }
     }

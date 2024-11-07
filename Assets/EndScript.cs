@@ -6,10 +6,6 @@ using UnityEngine;
 
 public class EndScript : MonoBehaviour
 {
-    public bool ClearedField = false;
-    public float Money = 0;
-
-    private float score = 0;
     [SerializeField] private TextMeshProUGUI scoreDisplay;
     [SerializeField] private TextMeshProUGUI BonusDisplay;
     [SerializeField] private TextMeshProUGUI MoneyDisplay;
@@ -19,19 +15,19 @@ public class EndScript : MonoBehaviour
 
     void Start()
     {
-        if (ClearedField)
+        if (GameData.clearedBoard)
         {
             BonusDisplay.text = "500";
-            score += 500;
+            GameData.score += 500;
         }
         else
         {
             BonusDisplay.text = "0";
         }
 
-        MoneyDisplay.text = Money.ToString("0.00");
-        score += Money;
-        scoreDisplay.text = score.ToString("0.00");
+        MoneyDisplay.text = GameData.money.ToString("0.00");
+        GameData.score += GameData.money;
+        scoreDisplay.text = GameData.score.ToString("0.00");
     }
 
     // Update is called once per frame

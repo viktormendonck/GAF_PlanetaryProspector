@@ -6,7 +6,7 @@ public class VeinInfo : MonoBehaviour
     // Start is called before the first frame update
     private bool found = false;
     private bool depleted = false;
-    private float veinAmount = 100;
+    [SerializeField] private float veinAmount = 100;
     private float totalAmount = 0;
     private Material veinMaterialInstance;
     [SerializeField] private Color depletedVeinColor = new Color(0.1f, 0.1f, 0.1f, 1f);

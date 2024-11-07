@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameData : MonoBehaviour
 {
-    public static int score = 0;
-    public static int money = 0;
+    public static float score = 0;
+    public static float money = 0;
     public static bool clearedBoard = false;
 
     
