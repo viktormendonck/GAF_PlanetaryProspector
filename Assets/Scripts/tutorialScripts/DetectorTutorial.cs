@@ -16,9 +16,6 @@ public class DetectorTutorial : MonoBehaviour
     [SerializeField] private float maxScanDelay = 5f;
     private float currentScanDelay = 0f;
     [SerializeField] private float scanRange = 1.5f;
-    [SerializeField] private int maxScanDepth = 4;
-    [SerializeField] private int currentScanDepth = 0;
-    [SerializeField] private float maxX = 7.5f;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     private float maxFlickerTime = 0.5f;
