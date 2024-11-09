@@ -7,6 +7,7 @@ using UnityEngine;
 public class EndScript : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreDisplay;
+    [SerializeField] private TextMeshProUGUI earlyEndDisplay;
     [SerializeField] private TextMeshProUGUI BonusDisplay;
     [SerializeField] private TextMeshProUGUI MoneyDisplay;
 
@@ -26,7 +27,8 @@ public class EndScript : MonoBehaviour
         }
 
         MoneyDisplay.text = GameData.money.ToString("0.00");
-        GameData.score += GameData.money;
+        earlyEndDisplay.text = GameData.earlyEndScore.ToString("0.00");
+        GameData.score += GameData.money + GameData.earlyEndScore;
         scoreDisplay.text = GameData.score.ToString("0.00");
     }
 

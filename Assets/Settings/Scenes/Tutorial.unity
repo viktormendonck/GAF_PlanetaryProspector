@@ -4259,7 +4259,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 327, y: -10}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1168028962
 MonoBehaviour:
@@ -6084,16 +6084,16 @@ MonoBehaviour:
   - Text: Great, now that we have an influx of ore we can start earning some money.Get
       a Transporter, then we can get some sales going
     VisualObject: {fileID: 489110056}
-  - Text: Currently your transporter is only storing the ore you mine.                                                               
-      Lets start selling it
+  - Text: Currently your transporter is only storing the ore you mine. Lets start
+      selling it
     VisualObject: {fileID: 1761195685}
   - Text: now the Sales price may not always be in your favour. So you can build
       a silo to store it away to sell it later
     VisualObject: {fileID: 579900233}
   - Text: Now that you've placed a silo.Stop your transporters from selling
     VisualObject: {fileID: 719276412}
-  - Text: Great, I've told you all you need to know, \nnow you can go off and start
-      on your own\n Beware, this time everything wont be free
+  - Text: Great, I've told you all you need to know, now you can go off and start
+      on your own. Beware, this time everything wont be free
     VisualObject: {fileID: 764566864}
   tutorialText: {fileID: 165266588}
 --- !u!1 &1916583388

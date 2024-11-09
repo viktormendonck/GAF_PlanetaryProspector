@@ -12,10 +12,9 @@ public class Condition2 : TutorialCondition
         if (!foundDetector && GameObject.FindGameObjectsWithTag("Detector").Length > 0)
         {
             detector = GameObject.FindGameObjectWithTag("Detector").GetComponent<DetectorTutorial>();
-            if (detector != null)
+            if (detector == null)
             {
                 Debug.LogError("Couldnt find the detector " + GameObject.FindGameObjectWithTag("Detector").name);
-                //somehow this isn't returning the detector, check tomorrow, now sleep
             }
             foundDetector = true;
         }

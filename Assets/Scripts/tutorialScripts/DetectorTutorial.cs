@@ -83,7 +83,7 @@ public class DetectorTutorial : MonoBehaviour
             {
                 targetPosition = new Vector3(0, transform.position.y, transform.position.z);
             }
-            else if (Vector3.Distance(transform.position, targetPosition) < 0.5f)
+            else if (Vector3.Distance(transform.position, targetPosition) < 0.05f)
             {
                 isScanning = true;
                 targetPosition = new Vector3(0, 0, 0);

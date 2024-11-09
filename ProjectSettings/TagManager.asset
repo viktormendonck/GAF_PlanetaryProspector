@@ -18,6 +18,7 @@ TagManager:
   - ShopButton
   - TransportHandler
   - Detector
+  - Time
   layers:
   - Default
   - TransparentFX

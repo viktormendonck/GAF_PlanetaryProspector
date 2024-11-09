@@ -10,7 +10,9 @@ public class DrillNodeController : MonoBehaviour
     private Collider2D groundBox;
     [SerializeField] private Color previewColor;
     [SerializeField] private Color invalidColor;
-    [SerializeField] private float PricePerUnit = 20.0f;
+    [SerializeField] private float pricePerUnit = 10.0f;
+    [SerializeField] private float basePrice = 25.0f;
+
     private const string _buildinglayer = "Building";
     [SerializeField] private GameObject ParentObject;
 
@@ -59,7 +61,7 @@ public class DrillNodeController : MonoBehaviour
             isPreviewActive = false;
             if (isPipeValid)
             {
-                money.AddMoney(-(Vector2.Distance(transform.position, mouseWorldPos) * PricePerUnit));
+                money.AddMoney(-((Vector2.Distance(transform.position, mouseWorldPos) * pricePerUnit) + basePrice));
                 GameObject drillObject = Instantiate(drill, transform.position, Quaternion.identity, transform);
                 DrillingBehavior drillBehavior = drillObject.GetComponent<DrillingBehavior>();
                 drillBehavior.SetConnectionParent(gameObject);
@@ -87,7 +89,7 @@ public class DrillNodeController : MonoBehaviour
     private bool IsPipeValid()
     {
         float distance = Vector2.Distance(transform.position, mouseWorldPos);
-        float price = distance * PricePerUnit;
+        float price = distance * pricePerUnit+ basePrice;
         priceIndicator.setPrice((int)price);
         //check if you can afford to place the pipe
         if (price > money.GetMoney())

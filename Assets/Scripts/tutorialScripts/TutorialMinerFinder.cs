@@ -9,7 +9,7 @@ public class TutorialMinerFinder : MonoBehaviour
     private TransportHandler transportHandler;
 
 
-    [SerializeField] private readonly Vector3 offset = new Vector2(0,-1);
+    [SerializeField] private readonly Vector3 offset = new Vector2(0,-0.65f);
     // Update is called once per frame
     void Start()
     {

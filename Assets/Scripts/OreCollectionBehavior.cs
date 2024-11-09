@@ -33,6 +33,7 @@ public class OreCollectionBehavior : StateMachineBehaviour
         animator.ResetTrigger("StartSelling");
         animator.ResetTrigger("DoneDepositing");
         animator.ResetTrigger("Arrived");
+        animator.ResetTrigger("AllContainersEmpty");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

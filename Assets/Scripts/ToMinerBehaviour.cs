@@ -15,7 +15,7 @@ public class ToMinerBehaviour : StateMachineBehaviour
         TransporterNode node = animator.GetComponent<TransporterNode>();
         animator.GetComponent<TransporterController>().Deactivate();
         handler = animator.GetComponentInParent<TransportHandler>();
-        goal = GetFullestMiner();
+        goal = GetFullestMiner(animator);
         ClearAnimatorParams(animator);
 
     }
@@ -28,6 +28,7 @@ public class ToMinerBehaviour : StateMachineBehaviour
         animator.ResetTrigger("StartSelling");
         animator.ResetTrigger("DoneDepositing");
         animator.ResetTrigger("Arrived");
+        animator.ResetTrigger("AllContainersEmpty");
     }
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -46,22 +47,32 @@ public class ToMinerBehaviour : StateMachineBehaviour
         }
         else
         {
-            goal = GetFullestMiner();
+            goal = GetFullestMiner(animator);
         }
     }
 
-    private GameObject GetFullestMiner()
+    private GameObject GetFullestMiner(Animator animator)
     {
         float temp = 0;
         GameObject result = null;
+        bool allEmpty = true;
         foreach (GameObject Object in handler.MinerNodes)
         {
             OreContainer container = Object.GetComponent<TransporterNode>().GetOreContainer();
             if (container.GetCurrentOreAmount() >= temp)
             {
+                if (allEmpty && container.GetCurrentOreAmount() > 0)
+                {
+                    allEmpty = false;
+                }
+
                 temp = container.GetCurrentOreAmount();
                 result = Object;
             }
+        }
+        if (allEmpty)
+        {
+            animator.SetTrigger("AllContainersEmpty");
         }
         return result;
     }

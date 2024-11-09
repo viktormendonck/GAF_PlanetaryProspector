@@ -14,6 +14,8 @@ public class TimeManager : MonoBehaviour
     readonly private string textPrefix = "sol ";
     private float currentTimeOfDay = 0;
     private bool hasEnded = false;
+
+    private bool earlyEndTriggered = false;
     // Update is called once per frame
     void Start()
     {
@@ -29,11 +31,9 @@ public class TimeManager : MonoBehaviour
             text.text = textPrefix + currentDay + "/" + maxDay.ToString();
         }
 
-        if (currentDay == maxDay+1 && !hasEnded)
+        if ((currentDay == maxDay+1 && !hasEnded) || earlyEndTriggered)
         {
             hasEnded = true;
-
-           
 
             GameData.money = GameObject.FindGameObjectWithTag("Money").GetComponent<MoneyContainer>().GetMoney();
             bool temp = false;
@@ -50,5 +50,13 @@ public class TimeManager : MonoBehaviour
     public int GetCurrentDay()
     {
         return currentDay;
+    }
+    public int GetMaxDay()
+    {
+        return maxDay;
+    }
+    public void EndEarly()
+    {
+        earlyEndTriggered = true;
     }
 }

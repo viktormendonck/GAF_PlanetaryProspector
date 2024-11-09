@@ -14,7 +14,7 @@ public class ToStorageBehaviour : StateMachineBehaviour
         TransporterNode node = animator.GetComponent<TransporterNode>();
         animator.GetComponent<TransporterController>().Deactivate();
         handler = animator.GetComponentInParent<TransportHandler>();
-        goal = GetStorageObject();
+        goal = GetStorageObject(animator);
         ClearAnimatorParams(animator);
 
     }
@@ -27,6 +27,7 @@ public class ToStorageBehaviour : StateMachineBehaviour
         animator.ResetTrigger("StartSelling");
         animator.ResetTrigger("DoneDepositing");
         animator.ResetTrigger("Arrived");
+        animator.ResetTrigger("AllContainersEmpty");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -35,7 +36,7 @@ public class ToStorageBehaviour : StateMachineBehaviour
         //move towards goal
         if (goal == null)
         {
-            goal = GetStorageObject();
+            goal = GetStorageObject(animator);
         }
         else {
             if (Vector2.Distance(animator.transform.position, goal.transform.position) > 0.01)
@@ -49,16 +50,22 @@ public class ToStorageBehaviour : StateMachineBehaviour
         }
     }
 
-    private GameObject GetStorageObject()
+    private GameObject GetStorageObject(Animator animator)
     {
         float temp = 0;
         GameObject result = null;
+        bool allEmpty = true;
         foreach (GameObject Object in handler.MinerNodes)
         {
             OreContainer container = Object.GetComponent<TransporterNode>().GetOreContainer();
             float orePercentage = container.GetCurrentOreAmount() / container.GetMaxOreAmount();
             if (orePercentage >= temp)
             {
+                if (allEmpty && container.GetCurrentOreAmount() > 0)
+                {
+                    allEmpty = false;
+                }
+
                 temp = orePercentage;
                 result = Object;
             }
@@ -70,12 +77,19 @@ public class ToStorageBehaviour : StateMachineBehaviour
                 OreContainer container = Object.GetComponent<TransporterNode>().GetOreContainer();
                 if (container.GetCurrentOreAmount() >= temp)
                 {
+                    if (allEmpty && container.GetCurrentOreAmount() > 0)
+                    {
+                        allEmpty = false;
+                    }
                     temp = container.GetCurrentOreAmount();
                     result = Object;
                 }
             }
         }
+        if (allEmpty)
+        {
+            animator.SetTrigger("AllContainersEmpty");
+        }
         return result;
-
     }
 }
