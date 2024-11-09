@@ -105,4 +105,8 @@ public class MetalDetectorController : MonoBehaviour
         }
     }
 
+    public bool FoundOre()
+    {
+        return foundOre;
+    }
 }

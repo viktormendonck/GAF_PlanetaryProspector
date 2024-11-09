@@ -94,5 +94,8 @@ public class DetectorTutorial : MonoBehaviour
             }
         }
     }
-
+    public bool FoundOre()
+    {
+        return foundOre;
+    }
 }

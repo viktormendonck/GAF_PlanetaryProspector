@@ -29,6 +29,7 @@ public class VeinInfo : MonoBehaviour
         return veinAmount;
     }
 
+
     public bool wasFound()
     {
         return found;

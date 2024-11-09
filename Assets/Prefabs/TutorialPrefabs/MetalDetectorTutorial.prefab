@@ -340,10 +340,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1756956189802414253}
-  - component: {fileID: 5966894571404862398}
+  - component: {fileID: 7225969830452043345}
   m_Layer: 3
   m_Name: MetalDetectorTutorial
-  m_TagString: Untagged
+  m_TagString: Detector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -366,7 +366,7 @@ Transform:
   - {fileID: 3555390674361919081}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5966894571404862398
+--- !u!114 &7225969830452043345
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -375,14 +375,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6837430982084425826}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c147daa1ac4bfd4f804ce3c3a125ab7, type: 3}
+  m_Script: {fileID: 11500000, guid: 038f7131a13793d4d816863025e0bcba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
   maxScanDelay: 1
   scanRange: 1.5
-  maxScanDepth: 4
-  currentScanDepth: 0
-  maxX: 7.5
   spriteRenderer: {fileID: 6869834128645897907}
   waitingTime: 10
